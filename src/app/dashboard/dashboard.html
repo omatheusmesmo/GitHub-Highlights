@@ -1,0 +1,14 @@
+<p>dashboard works!</p>
+
+@if (userData.id) {
+    <section>
+        <h1>Highlights Dashboard: {{ userData.name}}</h1>
+        <img [src]="userData.avatar_url" alt="User Image" style="width: 150px;">
+        <p>Followers: {{ userData.followers }}</p>
+        <p>Public Repositories: {{ userData.public_repos}}</p>
+    </section>
+} @else {
+    <div>
+        <p>Loading data of {{ username }} or user not found...</p>
+    </div>
+}
