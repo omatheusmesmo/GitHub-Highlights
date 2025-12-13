@@ -6,6 +6,7 @@
         <img [src]="userData.avatar_url" alt="User Image" style="width: 150px;">
         <p>Followers: {{ userData.followers }}</p>
         <p>Public Repositories: {{ userData.public_repos}}</p>
+        <app-star-count [username]="username">Total Stars</app-star-count>
     </section>
 } @else {
     <div>

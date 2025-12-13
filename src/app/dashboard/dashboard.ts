@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Github } from '../github';
 import { catchError, of } from 'rxjs';
+import { StarCount } from '../star-count/star-count';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [ StarCount],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
-export class Dashboard {
+export class Dashboard implements OnInit{
 
   username: string = '';
   userData: any = {};
