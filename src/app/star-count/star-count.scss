@@ -1,0 +1,37 @@
+$star-yellow: #ffc700;
+$dark-grey: #333;
+$light-bg: #f5f5f5;
+
+:host {
+  display: block;
+  margin-top: 15px;
+  padding: 15px;
+  background-color: $light-bg;
+  border-radius: 8px;
+  border-left: 5px solid $star-yellow;
+}
+
+section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+p {
+  font-size: 1.2rem;
+  color: $dark-grey;
+  margin: 0;
+}
+
+.total-stars {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: $star-yellow;
+
+  &::before {
+    content: "\2B50";
+    margin-right: 5px;
+    color: $star-yellow;
+    font-size: 1.5rem;
+  }
+}
