@@ -12,4 +12,8 @@ export class Github {
   public getUser(username: string): Observable<any> {
     return this.http.get<any>('https://api.github.com/users/${username}');
   }
+
+  public getUserRepos(username: string): Observable<any>{
+    return this.http.get<any>('https://api.github.com/users/${username}/repos')
+  }
 }
