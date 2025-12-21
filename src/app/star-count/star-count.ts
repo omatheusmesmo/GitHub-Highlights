@@ -19,7 +19,7 @@ export class StarCount implements OnInit{
     private readonly githubService: Github
   ){}
   ngOnInit(): void {
-    this.githubService.getUserRepos(this.username());
+    this.getUserRepos(this.username());
   }
 
   public getUserRepos(username: string): void{

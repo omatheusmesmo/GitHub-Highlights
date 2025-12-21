@@ -20,6 +20,9 @@ export class Search {
   username: string = '';
 
   public search(username: string = this.username): void {
+
+    if (!username.trim()) return;
+
     this.githubService.getUser(username)
       .pipe(
         catchError(error => {
@@ -30,7 +33,9 @@ export class Search {
       .subscribe({
         next: (data)=> {
           console.log('User data:', data);
-          this.router.navigate(['/dashboard', this.username]);
+          if (data && data.login){
+            this.router.navigate(['/dashboard', data.login]);
+          }
         },
         error: (err) => {
           console.error('Subscription error:', err);
