@@ -1,0 +1,11 @@
+@if (dataLoaded() && mostUsedLanguage) {
+  <div class="language-card">
+    <h3>Main Stack</h3>
+    <span class="lang-badge" [style.backgroundColor]="currentColor">
+      {{ mostUsedLanguage }}
+    </span>
+    <p class="details">Used in {{ repoCount }} repositories</p>
+  </div>
+} @else if (dataLoaded() && !mostUsedLanguage) {
+  <p>No primary language detected.</p>
+}
