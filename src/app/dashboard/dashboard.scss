@@ -1,0 +1,12 @@
+.highlights-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+app-star-count,
+app-language-highlights {
+    flex: 1;
+    min-width: 250px;
+}

@@ -1,15 +1,16 @@
-<p>dashboard works!</p>
-
-@if (userData.id) {
-    <section>
-        <h1>Highlights Dashboard: {{ userData.name}}</h1>
-        <img [src]="userData.avatar_url" alt="User Image" style="width: 150px;">
-        <p>Followers: {{ userData.followers }}</p>
-        <p>Public Repositories: {{ userData.public_repos}}</p>
-        <app-star-count [username]="username">Total Stars</app-star-count>
-    </section>
-} @else {
-    <div>
-        <p>Loading data of {{ username }} or user not found...</p>
+<section class="dashboard-container">
+  @if (userData.login) {
+    <div class="user-header">
+      <img [src]="userData.avatar_url" alt="Avatar" class="avatar">
+      <h1>{{ userData.name || userData.login }}</h1>
+      <p>{{ userData.bio }}</p>
     </div>
-}
+
+    <div class="stats-grid">
+      <app-star-count [username]="username()"></app-star-count>
+      <app-language-highlights [username]="username()"></app-language-highlights>
+    </div>
+  } @else {
+    <p>Loading data from user...</p>
+  }
+</section>
