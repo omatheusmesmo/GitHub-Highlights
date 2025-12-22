@@ -1,12 +1,41 @@
-.highlights-container {
-    display: flex;
-    gap: 20px;
-    margin-top: 20px;
-    flex-wrap: wrap;
+.container {
+  padding: 40px 20px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-app-star-count,
-app-language-highlights {
-    flex: 1;
-    min-width: 250px;
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 40px;
+  padding: 20px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+
+  img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 3px solid var(--accent);
+  }
+
+  .info {
+    h1 { margin: 0; font-size: 2.2rem; color: var(--text-main); }
+    p { color: var(--text-muted); margin: 8px 0 0 0; font-size: 1.1rem; }
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.loading-state {
+  text-align: center;
+  padding-top: 100px;
+  color: var(--text-muted);
 }

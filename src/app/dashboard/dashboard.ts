@@ -4,17 +4,18 @@ import { Github } from '../github';
 import { catchError, of } from 'rxjs';
 import { StarCount } from '../star-count/star-count';
 import { LanguageHighlights } from '../language-highlights/language-highlights';
+import { ForkCount } from "../fork-count/fork-count";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [ StarCount, LanguageHighlights],
+  imports: [StarCount, LanguageHighlights, ForkCount],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
-export class Dashboard implements OnInit{
-
+export class Dashboard implements OnInit {
   username = signal<string>('');
-  userData: any = {};
+  userData: any = null;
+  repos = signal<any[]>([]);
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -22,29 +23,28 @@ export class Dashboard implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    const nameFromUrl = this.route.snapshot.paramMap.get('username') || '';
-    this.username.set(nameFromUrl);
-
-    console.log('Dashboard User: ', this.username);
-
-    if (this.username()){
-      this.githubService.getUser(this.username())
-        .pipe(
-          catchError(error => {
-            console.error('Error fetching user:', error);
-            return of ({});
-          })
-        )
-        .subscribe({
-          next: (data)=> {
-            console.log('User data:', data);
-            this.userData = data;
-          },
-          error: (err) => {
-            console.error('Subscription error:', err);
-          }
-        });
-    }
+    this.route.paramMap.subscribe(params => {
+      const nameFromUrl = params.get('username');
+      if (nameFromUrl) {
+        this.userData = null;
+        this.repos.set([]);
+        this.fetchData(nameFromUrl);
+      }
+    });
   }
 
+  private fetchData(user: string) {
+    this.githubService.getUser(user)
+      .pipe(catchError(() => of(null)))
+      .subscribe((data: any) => {
+        if (data && data.login) {
+          this.username.set(data.login);
+          this.userData = data;
+
+          this.githubService.getUserRepos(data.login).subscribe(repos => {
+            this.repos.set(repos);
+          });
+        }
+      });
+  }
 }

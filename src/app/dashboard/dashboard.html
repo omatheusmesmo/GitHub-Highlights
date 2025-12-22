@@ -1,16 +1,22 @@
-<section class="dashboard-container">
-  @if (userData.login) {
-    <div class="user-header">
-      <img [src]="userData.avatar_url" alt="Avatar" class="avatar">
-      <h1>{{ userData.name || userData.login }}</h1>
-      <p>{{ userData.bio }}</p>
-    </div>
+<main class="container">
+  @if (userData?.login) {
+    <header class="user-profile">
+      <img [src]="userData.avatar_url" alt="Avatar">
+      <div class="info">
+        <h1>{{ userData.name || userData.login }}</h1>
+        <p>{{ userData.bio }}</p>
+      </div>
+    </header>
 
     <div class="stats-grid">
-      <app-star-count [username]="username()"></app-star-count>
-      <app-language-highlights [username]="username()"></app-language-highlights>
+      <app-star-count [repos]="repos()"></app-star-count>
+      <app-language-highlights [repos]="repos()"></app-language-highlights>
+      <app-fork-count [repos]="repos()"></app-fork-count>
     </div>
+
   } @else {
-    <p>Loading data from user...</p>
+    <div class="loading-state">
+      <p>Loading data for {{ username() || 'user' }}...</p>
+    </div>
   }
-</section>
+</main>
