@@ -1,7 +1,14 @@
-<p>search works!</p>
-
-<p>
-    <label for="username">GitHub username</label>
-    <input type="text" id="username"  [(ngModel)]="username">
-    <button (click)="search()">Search</button>
-</p>
+<div class="search-section">
+  <div class="search-container">
+    <div class="input-wrapper">
+      <span class="search-icon">🔍</span>
+      <input
+        type="text"
+        [(ngModel)]="username"
+        placeholder="Search GitHub username..."
+        (keyup.enter)="onSearch()"
+      >
+    </div>
+    <button (click)="onSearch()">Analyze</button>
+  </div>
+</div>

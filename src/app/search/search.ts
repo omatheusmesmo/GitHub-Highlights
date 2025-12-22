@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import { Github } from '../github';
+import { Component, inject, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { catchError } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,35 +10,17 @@ import { Router } from '@angular/router';
 })
 export class Search {
 
-  constructor(
-    private readonly githubService: Github,
-    private readonly router: Router
-  ) {}
+  private readonly router = inject(Router);
 
   username: string = '';
+  searchEvent = output<string>();
 
-  public search(username: string = this.username): void {
+  public onSearch(): void {
+    const trimmed = this.username.trim();
+    if (!trimmed) return;
 
-    if (!username.trim()) return;
+    console.log('Search triggered for:', trimmed);
 
-    this.githubService.getUser(username)
-      .pipe(
-        catchError(error => {
-          console.error('Error fetching user:', error);
-          return [];
-        })
-      )
-      .subscribe({
-        next: (data)=> {
-          console.log('User data:', data);
-          if (data && data.login){
-            this.router.navigate(['/dashboard', data.login]);
-          }
-        },
-        error: (err) => {
-          console.error('Subscription error:', err);
-        }
-      });
+    this.router.navigate(['/dashboard', trimmed]);
   }
-
 }
