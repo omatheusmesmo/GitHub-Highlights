@@ -1,72 +1,58 @@
-import { Component, input, OnInit, signal } from '@angular/core';
-import { Github } from '../github';
-import { catchError } from 'rxjs';
+import { Component, HostBinding, input, computed } from '@angular/core';
 
 @Component({
   selector: 'app-language-highlights',
-  imports: [],
   templateUrl: './language-highlights.html',
   styleUrl: './language-highlights.scss',
 })
-export class LanguageHighlights implements OnInit{
+export class LanguageHighlights {
 
-  username = input<string>('');
-  dataLoaded = signal(false);
-  mostUsedLanguage: string = '';
-  repoCount: number = 0;
+  repos = input<any[]>([]);
+
   readonly languageColors: { [key: string]: string } = {
-    'TypeScript': '#3178c6', // Azul TS
-    'JavaScript': '#f1e05a', // Amarelo JS
-    'Python': '#3572A5',     // Azul Python
-    'Java': '#b07219',       // Marrom Java
-    'HTML': '#e34c26',       // Laranja HTML
-    'CSS': '#563d7c',        // Roxo CSS
-    'C#': '#178600',         // Verde C#
+    'TypeScript': '#3178c6',
+    'JavaScript': '#f1e05a',
+    'Python': '#3572A5',
+    'Java': '#b07219',
+    'HTML': '#e34c26',
+    'CSS': '#563d7c',
+    'C#': '#178600',
+    'Go': '#00ADD8',
+    'Rust': '#dea584'
   };
 
-  constructor(
-    private readonly githubService: Github
-  ){}
+  languageStats = computed(() => {
+    const reposList = this.repos();
+    if (reposList.length === 0) return { name: 'N/A', count: 0 };
 
-  ngOnInit(): void {
-    this.getLanguages(this.username());
-  }
+    const languageList = reposList
+      .map((repo: any) => repo.language)
+      .filter((lang: string | null) => lang !== null);
 
-  public getLanguages(username: string): void{
-    this.githubService.getUserRepos(username)
-      .pipe(
-        catchError(error => {
-          console.log('Error fetching user repos', error);
-          return [];
-        })
-      )
-      .subscribe({
-        next: (repos) => {
-          const languageList = repos
-          .map((repo: any) => repo.language)
-          .filter((lang: string | null) => lang !== null);
+    if (languageList.length === 0) return { name: 'None', count: 0 };
 
-          if (languageList.length > 0) {
-            const counts: { [key: string]: number } = {};
+    const counts: { [key: string]: number } = {};
+    languageList.forEach((lang: string) => {
+      counts[lang] = (counts[lang] || 0) + 1;
+    });
 
-            languageList.forEach((lang: string) => {
-              counts[lang] = (counts[lang] || 0) + 1;
-            });
-            const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+    const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
 
-            this.mostUsedLanguage = sorted[0][0];
-            this.repoCount = sorted[0][1];
-          }
+    return {
+      name: sorted[0][0],
+      count: sorted[0][1]
+    };
+  });
 
-          this.dataLoaded.set(true);
-        },
-        error: (error) => {
-          console.log('Error fetching user repos', error);
-        }
-      })
-  }
+  mostUsedLanguage = computed(() => this.languageStats().name);
+  repoCount = computed(() => this.languageStats().count);
 
   get currentColor(): string {
-    return this.languageColors[this.mostUsedLanguage] || '#666';
+    return this.languageColors[this.mostUsedLanguage()] || '#666';
+  }
+
+  @HostBinding('style.borderLeftColor')
+  get borderLeftColor(): string {
+    return this.currentColor;
   }
 }
