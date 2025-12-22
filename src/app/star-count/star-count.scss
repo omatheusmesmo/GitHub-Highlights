@@ -1,37 +1,46 @@
 $star-yellow: #ffc700;
-$dark-grey: #333;
-$light-bg: #f5f5f5;
 
 :host {
   display: block;
-  margin-top: 15px;
-  padding: 15px;
-  background-color: $light-bg;
+  padding: 20px;
+  background-color: #f5f5f5;
   border-radius: 8px;
-  border-left: 5px solid $star-yellow;
-}
-
-section {
+  text-align: center;
+  box-sizing: border-box;
+  height: 100%;
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 5px solid $star-yellow; // Borda fixa amarela
 }
 
-p {
-  font-size: 1.2rem;
-  color: $dark-grey;
-  margin: 0;
+h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 0.9rem; // Igual ao Main Stack
+  text-transform: uppercase; // Agora em caixa alta
 }
 
-.total-stars {
-  font-size: 1.8rem;
+.star-badge {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 20px;
+  background-color: $star-yellow; // Badge amarelo
+  color: white;
   font-weight: bold;
-  color: $star-yellow;
+  font-size: 1.3rem;
+  margin: 10px 0;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 
+  // Adicionando a estrela dentro do badge para ficar moderno
   &::before {
     content: "\2B50";
-    margin-right: 5px;
-    color: $star-yellow;
-    font-size: 1.5rem;
+    margin-right: 8px;
   }
+}
+
+.details {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0;
 }

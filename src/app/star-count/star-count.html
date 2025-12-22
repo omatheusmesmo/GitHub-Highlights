@@ -1,5 +1,7 @@
-@if (dataLoaded) {
-  <section>
-    <p>Total Stars: <span class="total-stars">{{ totalStars }}</span></p>
-  </section>
-}
+
+  <div class="star-card">
+    <h3>Total Stars</h3>
+    <span class="star-badge">
+      {{ totalStars() }}
+    </span>
+  </div>

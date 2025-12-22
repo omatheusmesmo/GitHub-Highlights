@@ -1,7 +1,4 @@
-import { Component, input, OnInit } from '@angular/core';
-import { Github } from '../github';
-import { catchError } from 'rxjs';
-import { error } from 'console';
+import { Component, computed, input } from '@angular/core';
 
 @Component({
   selector: 'app-star-count',
@@ -9,42 +6,12 @@ import { error } from 'console';
   templateUrl: './star-count.html',
   styleUrl: './star-count.scss',
 })
-export class StarCount implements OnInit{
+export class StarCount {
 
-  username = input<string>('');
-  totalStars: number = 0;
-  dataLoaded: boolean = false;
+  repos = input<any[]>([]);
 
-  constructor(
-    private readonly githubService: Github
-  ){}
-  ngOnInit(): void {
-    this.getUserRepos(this.username());
-  }
-
-  public getUserRepos(username: string): void{
-    this.githubService.getUserRepos(username)
-      .pipe(
-        catchError(error => {
-                  console.error('Error fetching user repos:', error);
-                  return [];
-                })
-      )
-      .subscribe({
-        next: (data) =>{
-
-          this.totalStars =data.reduce((acumulator: number, repository: any) => {
-            return acumulator + repository.stargazers_count;
-          }, 0);
-
-          this.dataLoaded = true;
-
-          console.log('Total Stars: ', this.totalStars);
-        },
-        error: (error) =>{
-          console.error('Subscription erros: ', error);
-        }
-      })
-  }
+  totalStars = computed(() =>
+    this.repos().reduce((acc, repo) => acc + repo.stargazers_count, 0)
+  );
 
 }
