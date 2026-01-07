@@ -14,6 +14,39 @@
       <app-fork-count [repos]="repos()"></app-fork-count>
     </div>
 
+    <section class="repos-section">
+      <h2>Repositories</h2>
+
+      <div class="repos-grid">
+        @for (repo of repos(); track repo._id) {
+          <div class="repo-card">
+            <div class="repo-header">
+              <a href="repo.html_url" target="_blank" class="repo-name">
+                {{ repo.name }}
+              </a>
+              <span class="visibility">{{ repo.visibility }}</span>
+            </div>
+
+            <p class="description">
+              {{ repo.description || 'No description provided.' }}
+            </p>
+
+            <div class="repo-footer">
+              @if (repo.language) {
+                <span class="repo-lang">
+                  <span class="dot"></span> {{ repo.language }}
+                </span>
+              }
+              <span>⭐ {{ repo.stargazers_count }}</span>
+              <span>🍴 {{ repo.forks_count }}</span>
+            </div>
+          </div>
+        } @empty {
+          <p class="empty-msg">No repositories found for this user.</p>
+        }
+      </div>
+    </section>
+
   } @else {
     <div class="loading-state">
       <p>Loading data for {{ username() || 'user' }}...</p>
