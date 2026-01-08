@@ -42,7 +42,9 @@ export class Dashboard implements OnInit {
           this.userData = data;
 
           this.githubService.getUserRepos(data.login).subscribe(repos => {
-            this.repos.set(repos);
+
+            const sortedRepos = repos.sort((a: any, b: any) => b.stargazers_count - a.stargazers_count);
+            this.repos.set(sortedRepos);
           });
         }
       });
