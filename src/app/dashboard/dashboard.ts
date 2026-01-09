@@ -5,6 +5,7 @@ import { catchError, of } from 'rxjs';
 import { StarCount } from '../star-count/star-count';
 import { LanguageHighlights } from '../language-highlights/language-highlights';
 import { ForkCount } from "../fork-count/fork-count";
+import { LANGUAGE_COLORS } from '../constants';
 
 @Component({
   selector: 'app-dashboard',
@@ -48,5 +49,9 @@ export class Dashboard implements OnInit {
           });
         }
       });
+  }
+
+  getLanguageColor(lang: string): string {
+    return LANGUAGE_COLORS[lang] || '#666';
   }
 }

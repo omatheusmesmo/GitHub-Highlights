@@ -43,6 +43,12 @@
 .repos-section {
   margin-top: 40px;
   width: 100%;
+  animation: fadeIn 0.8s ease-in-out;
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
 
   h2 {
     color: --text-main;
@@ -118,9 +124,13 @@
       .dot {
         width: 10px;
         height: 10px;
-        background-color: #3178c6;
         border-radius: 50%;
+        display: inline-block;
+        vertical-align: middle;
         margin-right: 5px;
+        box-sizing: border-box;
+        border: 1px solid rgba(0,0,0,0.1);
+        flex-shrink: 0;
       }
     }
   }

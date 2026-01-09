@@ -21,7 +21,7 @@
         @for (repo of repos(); track repo._id) {
           <div class="repo-card">
             <div class="repo-header">
-              <a href="repo.html_url" target="_blank" class="repo-name">
+              <a [href]="repo.html_url" target="_blank" class="repo-name">
                 {{ repo.name }}
               </a>
               <span class="visibility">{{ repo.visibility }}</span>
@@ -34,7 +34,7 @@
             <div class="repo-footer">
               @if (repo.language) {
                 <span class="repo-lang">
-                  <span class="dot"></span> {{ repo.language }}
+                  <span class="dot" [style.backgroundColor]="getLanguageColor(repo.language)"]></span> {{ repo.language }}
                 </span>
               }
               <span>⭐ {{ repo.stargazers_count }}</span>
