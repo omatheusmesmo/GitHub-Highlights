@@ -1,4 +1,5 @@
 import { Component, HostBinding, input, computed } from '@angular/core';
+import { LANGUAGE_COLORS } from '../constants';
 
 @Component({
   selector: 'app-language-highlights',
@@ -8,18 +9,6 @@ import { Component, HostBinding, input, computed } from '@angular/core';
 export class LanguageHighlights {
 
   repos = input<any[]>([]);
-
-  readonly languageColors: { [key: string]: string } = {
-    'TypeScript': '#3178c6',
-    'JavaScript': '#f1e05a',
-    'Python': '#3572A5',
-    'Java': '#b07219',
-    'HTML': '#e34c26',
-    'CSS': '#563d7c',
-    'C#': '#178600',
-    'Go': '#00ADD8',
-    'Rust': '#dea584'
-  };
 
   languageStats = computed(() => {
     const reposList = this.repos();
@@ -48,7 +37,7 @@ export class LanguageHighlights {
   repoCount = computed(() => this.languageStats().count);
 
   get currentColor(): string {
-    return this.languageColors[this.mostUsedLanguage()] || '#666';
+    return LANGUAGE_COLORS[this.mostUsedLanguage()] || '#666';
   }
 
   @HostBinding('style.borderLeftColor')
