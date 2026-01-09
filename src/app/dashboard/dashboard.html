@@ -10,15 +10,16 @@
 
     <div class="stats-grid">
       <app-star-count [repos]="repos()"></app-star-count>
-      <app-language-highlights [repos]="repos()"></app-language-highlights>
       <app-fork-count [repos]="repos()"></app-fork-count>
+      <app-language-highlights [repos]="repos()"></app-language-highlights>
+      <app-repo-count [count]="userData?.public_repos || 0"></app-repo-count>
     </div>
 
     <section class="repos-section">
       <h2>Repositories</h2>
 
       <div class="repos-grid">
-        @for (repo of repos(); track repo._id) {
+        @for (repo of repos(); track repo.name) {
           <div class="repo-card">
             <div class="repo-header">
               <a [href]="repo.html_url" target="_blank" class="repo-name">
@@ -34,11 +35,12 @@
             <div class="repo-footer">
               @if (repo.language) {
                 <span class="repo-lang">
-                  <span class="dot" [style.backgroundColor]="getLanguageColor(repo.language)"]></span> {{ repo.language }}
+                  <span class="dot" [style.background-color]="getLanguageColor(repo.language)"></span>
+                  {{ repo.language }}
                 </span>
               }
-              <span>⭐ {{ repo.stargazers_count }}</span>
-              <span>🍴 {{ repo.forks_count }}</span>
+              <span class="repo-stat">⭐ {{ repo.stargazers_count }}</span>
+              <span class="repo-stat">🍴 {{ repo.forks_count }}</span>
             </div>
           </div>
         } @empty {

@@ -6,10 +6,11 @@ import { StarCount } from '../star-count/star-count';
 import { LanguageHighlights } from '../language-highlights/language-highlights';
 import { ForkCount } from "../fork-count/fork-count";
 import { LANGUAGE_COLORS } from '../constants';
+import { RepoCount } from "../repo-count/repo-count";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [StarCount, LanguageHighlights, ForkCount],
+  imports: [StarCount, LanguageHighlights, ForkCount, RepoCount],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -52,6 +53,9 @@ export class Dashboard implements OnInit {
   }
 
   getLanguageColor(lang: string): string {
-    return LANGUAGE_COLORS[lang] || '#666';
+    if (!lang || !LANGUAGE_COLORS[lang]) {
+    return '#666666';
+  }
+    return LANGUAGE_COLORS[lang];
   }
 }
