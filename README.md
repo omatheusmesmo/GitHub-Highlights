@@ -1,60 +1,96 @@
-# GithubHighlights
+# GitHub Highlights ✅
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.2.
+**GitHub Highlights** is a small Angular (v21) application that displays quick insights about GitHub users and their repositories — stars, languages, forks, and repo counts. The app supports Server-Side Rendering (SSR) via `@angular/ssr` and can be run in development mode with the Angular CLI or served in production as an Express server.
 
-## Development server
+## 🔍 Features
 
-To start a local development server, run:
+- Search GitHub users by username
+- Dashboard with user info and top repositories
+- Language color highlights (based on `src/app/constants.ts`)
+- Reusable components: Star Count, Fork Count, Repo Count, Language Highlights
+- SSR-ready (see `src/main.server.ts` and `src/server.ts`)
+
+## 🛠️ Requirements
+
+- Node.js (recommended: **Node 20 LTS** or newer)
+- npm (project recorded `packageManager: "npm@11.6.2"`)
+- A GitHub API-accessible network (the app calls `https://api.github.com` directly)
+
+If you have a recommended Node/npm version, tell me and I will add it to the README.
+
+## 📦 Installation
+
+```bash
+git clone <repo-url>
+cd github-highlights
+# Install dependencies using your package manager (e.g., pnpm or yarn)
+pnpm install
+```
+
+## 🧑‍💻 Development
+
+Start the local development server (hot-reload):
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open http://localhost:4200 in your browser. The root page is a search box where you can enter a GitHub username and navigate to `/dashboard/:username`.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+To run a file watcher for development builds:
 
 ```bash
-ng generate component component-name
+ng build --watch --configuration development
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+
+## ⚙️ Build & Production (SSR)
+
+This project is configured for SSR. Build the production artifacts (browser + server) with the Angular CLI:
 
 ```bash
-ng generate --help
+ng build --configuration production
 ```
 
-## Building
-
-To build the project run:
+After a production build, run the server bundle directly (uses `dist/github-highlights/server/server.mjs`):
 
 ```bash
-ng build
+node dist/github-highlights/server/server.mjs
+# or with a custom port
+PORT=8080 node dist/github-highlights/server/server.mjs
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+The Express server defaults to port `4000` if `PORT` is not set (see `src/server.ts`).
 
-## Running unit tests
+> Note: `ng serve` runs the app in development mode (no SSR). After building for production with `ng build --configuration production`, run the server bundle (`node dist/github-highlights/server/server.mjs`) to serve SSR.
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+---
+
+## ✅ Testing
+
+Unit tests run via Vitest through the Angular test builder:
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+There are also component spec files under `src/app/**/*.spec.ts`.
 
-For end-to-end (e2e) testing, run:
+---
 
-```bash
-ng e2e
-```
+## 🧭 Project Structure (high level)
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+- `src/` — application source
+  - `main.ts` — client bootstrap
+  - `main.server.ts` — server bootstrap
+  - `server.ts` — Express server for SSR
+  - `app/` — components and routes (Search, Dashboard, StarCount, ForkCount, RepoCount, LanguageHighlights)
+- `public/` — static assets
+- `angular.json`, `package.json` — build and scripts
 
-## Additional Resources
+---
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-# GitHub-Highlights
+## ✅ Contributing
+
+Contributions are welcome — open an issue or submit a pull request. Please follow the existing project style (Prettier configuration is included in `package.json`). If you want, I can add a CONTRIBUTING.md and setup a simple PR template.
+
